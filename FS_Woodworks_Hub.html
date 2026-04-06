@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FS Woodworks">
+<title>FS Woodworks</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --charcoal: #2C2C2C;
+    --charcoal-light: #3D3D3D;
+    --gold: #C5A55A;
+    --gold-dark: #A8893D;
+    --gold-light: #F5EFE0;
+    --warm-bg: #F9F7F3;
+    --white: #FFFFFF;
+    --text: #333333;
+    --text-light: #8A8478;
+    --green: #4A7C59;
+    --green-light: #D5F5E3;
+    --blue: #2E75B6;
+    --blue-light: #D6EAF8;
+    --orange: #E67E22;
+    --orange-light: #FEF0DB;
+    --red: #C0392B;
+  }
+
+  body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--charcoal);
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .app {
+    max-width: 500px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Header */
+  .header {
+    padding: 48px 24px 32px;
+    text-align: center;
+  }
+
+  .logo-circle {
+    width: 72px;
+    height: 72px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    font-family: 'DM Sans', serif;
+    font-weight: 700;
+    font-size: 28px;
+    color: var(--charcoal);
+  }
+
+  .header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .header p {
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* Actions grid */
+  .actions {
+    padding: 0 20px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex: 1;
+  }
+
+  .action-btn {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: var(--charcoal-light);
+    border: 1.5px solid rgba(197, 165, 90, 0.15);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .action-btn:active {
+    transform: scale(0.98);
+    border-color: var(--gold);
+  }
+
+  .action-btn.live:hover {
+    border-color: var(--gold);
+    background: rgba(197, 165, 90, 0.08);
+  }
+
+  .action-btn.coming-soon {
+    opacity: 0.45;
+    cursor: default;
+  }
+
+  .action-btn.coming-soon:active {
+    transform: none;
+  }
+
+  .action-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .action-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2;
+    fill: none;
+  }
+
+  .action-icon.gold { background: rgba(197, 165, 90, 0.15); }
+  .action-icon.gold svg { stroke: var(--gold); }
+
+  .action-icon.green { background: rgba(74, 124, 89, 0.15); }
+  .action-icon.green svg { stroke: var(--green); }
+
+  .action-icon.blue { background: rgba(46, 117, 182, 0.15); }
+  .action-icon.blue svg { stroke: var(--blue); }
+
+  .action-icon.orange { background: rgba(230, 126, 34, 0.15); }
+  .action-icon.orange svg { stroke: var(--orange); }
+
+  .action-content {
+    flex: 1;
+  }
+
+  .action-content h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 3px;
+  }
+
+  .action-content p {
+    font-size: 12px;
+    color: var(--text-light);
+    line-height: 1.4;
+  }
+
+  .action-arrow {
+    color: var(--gold);
+    font-size: 20px;
+    font-weight: 300;
+    opacity: 0.5;
+  }
+
+  .action-btn.live .action-arrow {
+    opacity: 1;
+  }
+
+  .badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+
+  .badge.live-badge {
+    background: rgba(74, 124, 89, 0.2);
+    color: var(--green);
+  }
+
+  .badge.soon-badge {
+    background: rgba(138, 132, 120, 0.2);
+    color: var(--text-light);
+  }
+
+  /* Quick links */
+  .quick-links {
+    padding: 0 20px 20px;
+  }
+
+  .quick-links-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-light);
+    margin-bottom: 12px;
+    padding-left: 4px;
+  }
+
+  .links-row {
+    display: flex;
+    gap: 10px;
+  }
+
+  .quick-link {
+    flex: 1;
+    padding: 14px 12px;
+    background: var(--charcoal-light);
+    border: 1px solid rgba(197, 165, 90, 0.1);
+    border-radius: 12px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .quick-link:active {
+    transform: scale(0.97);
+    border-color: var(--gold);
+  }
+
+  .quick-link span {
+    display: block;
+    font-size: 11px;
+    color: var(--text-light);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .quick-link .icon {
+    font-size: 20px;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .footer p {
+    font-size: 11px;
+    color: rgba(138, 132, 120, 0.5);
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="header">
+    <div class="logo-circle">FS</div>
+    <h1>FS WOODWORKS</h1>
+    <p>Operations Hub</p>
+  </div>
+
+  <div class="actions">
+    <!-- NEW LEAD - LIVE -->
+    <a href="FS_Woodworks_Lead_Form_FINAL.html" class="action-btn live">
+      <div class="action-icon gold">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      </div>
+      <div class="action-content">
+        <h3>New Lead</h3>
+        <p>Got a call or email? Log it in 30 seconds.</p>
+      </div>
+      <div class="action-arrow">›</div>
+      <div class="badge live-badge">Live</div>
+    </a>
+
+    <!-- JOB UPDATE - COMING SOON -->
+    <div class="action-btn coming-soon">
+      <div class="action-icon green">
+        <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      </div>
+      <div class="action-content">
+        <h3>Job Update</h3>
+        <p>Log a status change, timeline update, or note on an active job.</p>
+      </div>
+      <div class="action-arrow">›</div>
+      <div class="badge soon-badge">Coming Soon</div>
+    </div>
+
+    <!-- CREW MOVE - COMING SOON -->
+    <div class="action-btn coming-soon">
+      <div class="action-icon blue">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      </div>
+      <div class="action-content">
+        <h3>Crew Move</h3>
+        <p>Reassign a crew member to a different job.</p>
+      </div>
+      <div class="action-arrow">›</div>
+      <div class="badge soon-badge">Coming Soon</div>
+    </div>
+
+    <!-- CONTRACTOR CHECK-IN - COMING SOON -->
+    <div class="action-btn coming-soon">
+      <div class="action-icon orange">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+      </div>
+      <div class="action-content">
+        <h3>Contractor Check-In</h3>
+        <p>Log a conversation with a GC or client about future work.</p>
+      </div>
+      <div class="action-arrow">›</div>
+      <div class="badge soon-badge">Coming Soon</div>
+    </div>
+  </div>
+
+  <!-- Quick Links -->
+  <div class="quick-links">
+    <div class="quick-links-title">Quick Access</div>
+    <div class="links-row">
+      <a href="#" class="quick-link" onclick="alert('Open your FS Woodworks Operations Google Sheet to view the dashboard.')">
+        <span class="icon">📊</span>
+        <span>Dashboard</span>
+      </a>
+      <a href="#" class="quick-link" onclick="alert('Open your FS Woodworks Operations Google Sheet to view the pipeline.')">
+        <span class="icon">📋</span>
+        <span>Pipeline</span>
+      </a>
+      <a href="#" class="quick-link" onclick="alert('Open your FS Woodworks Operations Google Sheet to view the crew schedule.')">
+        <span class="icon">👷</span>
+        <span>Crew</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>FS Woodworks Operations Hub v1.0</p>
+  </div>
+</div>
+
+</body>
+</html>

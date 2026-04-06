@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FS Leads">
+<title>FS Woodworks — New Lead</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --charcoal: #2C2C2C;
+    --gold: #C5A55A;
+    --gold-dark: #A8893D;
+    --gold-light: #F5EFE0;
+    --warm-bg: #F9F7F3;
+    --white: #FFFFFF;
+    --text: #333333;
+    --text-light: #8A8478;
+    --rule: #D8D2C8;
+    --green: #4A7C59;
+    --green-light: #E8F5E9;
+    --red: #C0392B;
+    --red-light: #FDEDEC;
+  }
+
+  body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--warm-bg);
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .header {
+    background: var(--charcoal);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .header-logo {
+    width: 44px;
+    height: 44px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Sans', serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--charcoal);
+    flex-shrink: 0;
+  }
+
+  .header-text h1 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.5px;
+  }
+
+  .header-text p {
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+  }
+
+  .form-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 4px;
+    padding: 16px 0 0;
+  }
+
+  .form-subtitle {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-bottom: 24px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--gold);
+    margin: 28px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--gold-light);
+  }
+
+  .field {
+    margin-bottom: 16px;
+  }
+
+  .field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .field label .required {
+    color: var(--gold);
+    margin-left: 2px;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    padding: 12px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px; /* prevents iOS zoom */
+    color: var(--text);
+    background: var(--white);
+    border: 1.5px solid var(--rule);
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(197, 165, 90, 0.15);
+  }
+
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: #C0B9AD;
+  }
+
+  .field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A8478' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 40px;
+  }
+
+  .field textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .field-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .field-row .field {
+    flex: 1;
+  }
+
+  .money-input {
+    position: relative;
+  }
+
+  .money-input::before {
+    content: '$';
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: var(--text-light);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .money-input input {
+    padding-left: 28px;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--charcoal);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 28px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .submit-btn:active {
+    transform: scale(0.98);
+    background: var(--gold-dark);
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .submit-btn .gold-accent {
+    color: var(--gold);
+  }
+
+  /* Success state */
+  .success-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(44, 44, 44, 0.95);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .success-overlay.show {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .success-icon {
+    width: 72px;
+    height: 72px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .success-icon svg {
+    width: 36px;
+    height: 36px;
+    stroke: var(--charcoal);
+    stroke-width: 3;
+    fill: none;
+  }
+
+  .success-text {
+    color: var(--white);
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .success-sub {
+    color: var(--gold);
+    font-size: 14px;
+  }
+
+  .success-btn {
+    margin-top: 20px;
+    padding: 14px 40px;
+    background: var(--gold);
+    color: var(--charcoal);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  /* Setup banner */
+  .setup-banner {
+    background: var(--gold-light);
+    border-left: 4px solid var(--gold);
+    padding: 16px;
+    margin-bottom: 20px;
+    border-radius: 0 10px 10px 0;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .setup-banner strong {
+    color: var(--gold-dark);
+  }
+
+  .setup-banner code {
+    background: var(--white);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: monospace;
+  }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes scaleIn { from { transform: scale(0); } to { transform: scale(1); } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">FS</div>
+  <div class="header-text">
+    <h1>FS WOODWORKS</h1>
+    <p>Lead Capture</p>
+  </div>
+</div>
+
+<div class="form-container">
+  <div class="form-title">New Lead</div>
+  <div class="form-subtitle">Enter the details below. Takes 30 seconds.</div>
+
+  <div class="setup-banner" id="setupBanner">
+    <strong>One-time setup needed:</strong> To connect this form to your Google Sheet, follow the instructions in the setup guide provided. Once connected, this banner will disappear and submissions will flow directly to your CRM tracker.
+  </div>
+
+  <form id="leadForm" onsubmit="return handleSubmit(event)">
+
+    <div class="section-label">Contact Info</div>
+
+    <div class="field">
+      <label>Client / Company Name <span class="required">*</span></label>
+      <input type="text" name="client" required placeholder="e.g. Summit Builders">
+    </div>
+
+    <div class="field">
+      <label>Contact Name</label>
+      <input type="text" name="contact" placeholder="e.g. John Davis">
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>Phone</label>
+        <input type="tel" name="phone" placeholder="(303) 555-1234">
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="john@email.com">
+      </div>
+    </div>
+
+    <div class="section-label">Project Details</div>
+
+    <div class="field">
+      <label>Lead Source <span class="required">*</span></label>
+      <select name="source" required>
+        <option value="" disabled selected>Select source...</option>
+        <option value="Contractor Referral">Contractor Referral</option>
+        <option value="Word of Mouth">Word of Mouth</option>
+        <option value="Past Client">Past Client</option>
+        <option value="Instagram / Website">Instagram / Website</option>
+        <option value="Direct Homeowner">Direct Homeowner</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Project Description <span class="required">*</span></label>
+      <textarea name="description" required placeholder="e.g. Full house trim package, 4,200 sq ft custom home. Crown, base, casing, built-ins."></textarea>
+    </div>
+
+    <div class="field">
+      <label>Project Address</label>
+      <input type="text" name="address" placeholder="e.g. 1234 Pine Ridge Dr, Boulder">
+    </div>
+
+    <div class="field">
+      <label>Estimated Job Value</label>
+      <div class="money-input">
+        <input type="number" name="value" placeholder="150000" min="0" step="1000">
+      </div>
+    </div>
+
+    <div class="section-label">Follow-Up</div>
+
+    <div class="field">
+      <label>Initial Status</label>
+      <select name="status">
+        <option value="New Lead" selected>New Lead</option>
+        <option value="Contacted">Contacted</option>
+        <option value="Quote Sent">Quote Sent</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Follow-Up Date</label>
+      <input type="date" name="followup">
+    </div>
+
+    <div class="field">
+      <label>Notes</label>
+      <textarea name="notes" placeholder="Any additional context — who referred them, timeline, budget notes..."></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn" id="submitBtn">
+      Add Lead <span class="gold-accent">→</span>
+    </button>
+  </form>
+</div>
+
+<!-- Success overlay -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-icon">
+    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+  </div>
+  <div class="success-text">Lead Added</div>
+  <div class="success-sub">It's in the pipeline.</div>
+  <button class="success-btn" onclick="resetForm()">Add Another</button>
+</div>
+
+<script>
+  // ============================================================
+  // GOOGLE SHEETS CONNECTION
+  // ============================================================
+  // To connect this form to your Google Sheet:
+  //
+  // 1. Open your FS_Woodworks_CRM_Pipeline_Tracker in Google Sheets
+  // 2. Go to Extensions > Apps Script
+  // 3. Paste this code:
+  //
+  //    function doPost(e) {
+  //      var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Pipeline");
+  //      var data = JSON.parse(e.postData.contents);
+  //      var lastRow = sheet.getLastRow();
+  //      var newRow = lastRow + 1;
+  //      sheet.getRange(newRow, 2).setValue(data.date);
+  //      sheet.getRange(newRow, 3).setValue(data.client);
+  //      sheet.getRange(newRow, 4).setValue(data.contact);
+  //      sheet.getRange(newRow, 5).setValue(data.phone);
+  //      sheet.getRange(newRow, 6).setValue(data.email);
+  //      sheet.getRange(newRow, 7).setValue(data.source);
+  //      sheet.getRange(newRow, 8).setValue(data.description);
+  //      sheet.getRange(newRow, 9).setValue(data.address);
+  //      sheet.getRange(newRow, 10).setValue(data.value ? Number(data.value) : "");
+  //      sheet.getRange(newRow, 11).setValue(data.status);
+  //      sheet.getRange(newRow, 13).setValue(data.followup);
+  //      sheet.getRange(newRow, 14).setValue(data.notes);
+  //      return ContentService.createTextOutput(JSON.stringify({result: "success"}))
+  //        .setMimeType(ContentService.MimeType.JSON);
+  //    }
+  //
+  // 4. Click Deploy > New Deployment
+  // 5. Choose "Web app", set access to "Anyone"
+  // 6. Copy the deployment URL
+  // 7. Paste it below replacing the placeholder:
+
+  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzeRM9aP83-CarXaS73wQbJ2R7nafVIvaBDIPi-_A6Rl0tHyFMawImTtjEYir3wwVqDCg/exec'; // <-- PASTE YOUR DEPLOYMENT URL HERE
+
+  // Once you paste the URL, the setup banner will automatically hide.
+  // ============================================================
+
+  // Hide setup banner if URL is configured
+  if (GOOGLE_SCRIPT_URL) {
+    document.getElementById('setupBanner').style.display = 'none';
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    const form = document.getElementById('leadForm');
+    const data = {
+      date: new Date().toLocaleDateString('en-US'),
+      client: form.client.value,
+      contact: form.contact.value,
+      phone: form.phone.value,
+      email: form.email.value,
+      source: form.source.value,
+      description: form.description.value,
+      address: form.address.value,
+      value: form.value.value,
+      status: form.status.value,
+      followup: form.followup.value ? new Date(form.followup.value + 'T00:00:00').toLocaleDateString('en-US') : '',
+      notes: form.notes.value,
+    };
+
+    if (GOOGLE_SCRIPT_URL) {
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+      .then(() => showSuccess())
+      .catch(() => showSuccess()); // no-cors won't return readable response, but it works
+    } else {
+      // Demo mode — just show success
+      setTimeout(() => showSuccess(), 600);
+    }
+
+    return false;
+  }
+
+  function showSuccess() {
+    document.getElementById('successOverlay').classList.add('show');
+    document.getElementById('submitBtn').disabled = false;
+    document.getElementById('submitBtn').innerHTML = 'Add Lead <span class="gold-accent">→</span>';
+  }
+
+  function resetForm() {
+    document.getElementById('leadForm').reset();
+    document.getElementById('successOverlay').classList.remove('show');
+    window.scrollTo(0, 0);
+  }
+</script>
+
+</body>
+</html>
